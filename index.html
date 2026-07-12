@@ -489,7 +489,7 @@
   <div class="hero-inner">
     <div class="hero-left">
       <div class="hero-eyebrow"><span></span>New York City Energy Consulting</div>
-      <h1>Unlock every dollar your building is <em>entitled to.</em></h1>
+      <h1>Unlock every dollar your building is <em>entitled to</em> — and save the planet while you're at it.</h1>
       <p class="hero-lead">Big Menorah Energy navigates utility incentive programs, LL97 compliance, and energy efficiency upgrades for commercial and multifamily buildings in NYC and beyond.</p>
       <div class="hero-actions">
         <button class="btn-gold" onclick="document.querySelector('#contact').scrollIntoView({behavior:'smooth'})">Schedule a Consultation</button>
@@ -682,7 +682,7 @@
           <div class="step-num">3</div>
           <div>
             <h4>Contractor Coordination</h4>
-            <p>We work directly with your contractors to ensure installations meet program specifications and that required documentation is captured at time of installation.</p>
+            <p>We work directly with your contractors to ensure installations meet program specifications and that required documentation is captured at time of installation. If you don't already have a contractor, we can also connect you with trusted, program-approved installers from our network.</p>
           </div>
         </div>
         <div class="process-step">
@@ -801,7 +801,7 @@
           </div>
           <div>
             <div class="cd-label">Email</div>
-            <div class="cd-value">ben@bigmenorahenergy.com</div>
+            <div class="cd-value">ben@bigmenorah.energy</div>
           </div>
         </div>
         <div class="cd-row">
@@ -894,6 +894,7 @@
       <a href="#services">Services</a>
       <a href="#incentives">Incentives</a>
       <a href="#compliance">LL97</a>
+      <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </div>
   </div>
@@ -916,12 +917,31 @@
   // form
   const form = document.getElementById('contactForm');
   const status = document.getElementById('formStatus');
+  const CONTACT_EMAIL = 'ben@bigmenorah.energy';
   form.addEventListener('submit', e => {
     e.preventDefault();
-    status.textContent = 'Sending…';
+    status.textContent = 'Opening your email client…';
     status.style.color = 'var(--muted)';
+
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const buildingType = form.building_type.value;
+    const interest = form.interest.value;
+    const message = form.message.value.trim();
+
+    const subject = `New inquiry from ${name} — ${buildingType}`;
+    const body =
+      `Name: ${name}\n` +
+      `Email: ${email}\n` +
+      `Building Type & Size: ${buildingType}\n` +
+      `Primary Interest: ${interest}\n\n` +
+      `Message:\n${message}`;
+
+    const mailtoLink = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
+
     setTimeout(() => {
-      status.textContent = '✓ Message received — we\'ll be in touch shortly.';
+      status.textContent = '✓ Your email client should now be open — send when ready.';
       status.style.color = 'var(--accent)';
       form.reset();
     }, 700);
